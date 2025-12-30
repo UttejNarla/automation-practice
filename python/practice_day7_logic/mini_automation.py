@@ -1,9 +1,8 @@
-def simulate_data(user_data):
-	print(f"Executing testing for : {user_data['username']}")
-	if user_data["expected"] == "success":
-		return "PASS"
+def simulation_data(username,password):
+	if username == "user" and password == "admin123":
+		return "success"
 	else:
-		return "FAIL"
+		return "failed"
 
 
 test_data = [
@@ -23,12 +22,15 @@ for data in test_data:
 	if data["skip"]:
 		print(f"SKIPPED : {data['username']}")
 		skipped += 1
-	else:
-		if simulate_data(data) == "PASS":
-			passed += 1
-		else:
-			failed += 1
+		continue
 
+	actual = simulation_data(data["username"],data["password"])
+	if actual == data["expected"]:
+		passed += 1
+	else:
+		failed += 1
+
+print("-" *30)
 print("TEST SUMMARY REPORT")
 print(f"Total test cases :     {len(test_data)}")
 print(f"Passed :               {passed}")
